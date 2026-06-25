@@ -3,15 +3,25 @@ dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const userRoutes = require("./route/user.route.js");
 const productRoutes = require("./route/product.route.js");
 
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 app.get("/", (req, res) => {
   res.send("Hello Christian! Your server is running.");
 });
